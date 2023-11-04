@@ -1,1 +1,37 @@
-// [env:esp32doit-devkit-v4]// platform = espressif32// board = esp32doit-devkit-v4// framework = arduino//// [env:esp32doit-devkit-v1]// platform = espressif32// board = esp32doit-devkit-v1// framework = arduino/* ===== Built-in headers ===== */#include <Arduino.h>#include <HardwareSerial.h>#include </Users/shashinma/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFi/src/ESP8266WiFi.h>#include </Users/shashinma/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266HTTPClient/src/ESP8266HTTPClient.h>#include </Users/shashinma/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFi/src/WiFiClient.h>#define RATE 115200#ifdef ESP8266#define TX 1#define RX 3#define A0 A0#define D0 16#define D1 5#define D2 4#define D3 0#define D4 2#define D5 14#define D6 12#define D7 13#define D8 15#endif//#define D3 0//#define D4 2const int pingPin = D3;int inPin = D4;long microsecondsToCentimeters(long microseconds){    return microseconds / 29 / 2;}void setup(){    Serial.begin(115200);}void loop(){    long duration, cm;    pinMode(pingPin, OUTPUT);    digitalWrite(pingPin, LOW);    delayMicroseconds(2);    digitalWrite(pingPin, HIGH);    delayMicroseconds(5);    digitalWrite(pingPin, LOW);    pinMode(inPin, INPUT);    duration = pulseIn(inPin, HIGH);    cm = microsecondsToCentimeters(duration);    Serial.print(cm);    Serial.print("cm");    Serial.println();    delay(100);}
+#include <Arduino.h>
+
+//#define D3 0
+//#define D4 2
+
+const int pingPin = D3;
+int inPin = D4;
+
+long microsecondsToCentimeters(long microseconds)
+{
+    return microseconds / 29 / 2;
+}
+
+void setup()
+{
+    Serial.begin(115200);
+}
+
+void loop()
+{
+    long duration, cm;
+    pinMode(pingPin, OUTPUT);
+
+    digitalWrite(pingPin, LOW);
+    delayMicroseconds(2);
+    digitalWrite(pingPin, HIGH);
+    delayMicroseconds(5);
+    digitalWrite(pingPin, LOW);
+    pinMode(inPin, INPUT);
+    duration = pulseIn(inPin, HIGH);
+    cm = microsecondsToCentimeters(duration);
+
+    Serial.print(cm);
+    Serial.print("cm");
+    Serial.println();
+    delay(100);
+}
